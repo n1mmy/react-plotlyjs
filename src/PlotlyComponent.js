@@ -39,7 +39,13 @@ var PlotlyComponent = React.createClass({
     //TODO use minimal update for given changes
     this.container.data = this.props.data;
     this.container.layout = this.props.layout;
-    Plotly.redraw(this.container);
+    // XXX nim try twice. this fixes an issue where it fails to redraw
+    // due to number of points changing... *shrug*
+    try {
+      Plotly.redraw(this.container);
+    } catch (e) {
+      Plotly.redraw(this.container);
+    }
   },
 
   componentWillUnmount: function() {
